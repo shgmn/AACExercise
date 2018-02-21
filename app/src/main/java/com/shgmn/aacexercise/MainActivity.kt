@@ -1,6 +1,7 @@
 package com.shgmn.aacexercise
 
 import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -9,9 +10,14 @@ import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
+    private val lifecycleObserver = LifecycleObserverImpl()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        lifecycle.addObserver(lifecycleObserver)
+
         Timber.d("onCreate " + lifecycle.currentState.name)
 
         Handler().postDelayed({
@@ -42,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Timber.d("onDestroy " + lifecycle.currentState.name)
+        lifecycle.removeObserver(lifecycleObserver)
     }
 
     override fun onRestart() {
