@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private val lifecycleObserver = LifecycleObserverImpl()
 
-    val textView : TextView by lazy {
+    private val textView : TextView by lazy {
         findViewById<TextView>(R.id.text)
     }
 
