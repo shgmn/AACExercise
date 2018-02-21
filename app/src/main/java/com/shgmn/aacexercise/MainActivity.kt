@@ -6,11 +6,16 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.widget.TextView
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
     private val lifecycleObserver = LifecycleObserverImpl()
+
+    val textView : TextView by lazy {
+        findViewById<TextView>(R.id.text)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +28,12 @@ class MainActivity : AppCompatActivity() {
         Handler().postDelayed({
             Timber.d("onCreate " + lifecycle.currentState.name)
         }, 1000)
+
+        Handler().postDelayed({
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                textView.setText("hogege")
+            }
+        }, 5000)
     }
 
     override fun onStart() {
